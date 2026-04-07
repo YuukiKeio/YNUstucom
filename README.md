@@ -1,6 +1,7 @@
 # YNUstucom
 
 用来方便本喵找学校网站喵
+*vide-coding project
 
 ## 使用方法
 
