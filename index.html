@@ -12,104 +12,176 @@
         darkMode: "class",
         theme: {
           extend: {
-            colors: {
-              darkBg: "#05070d",
-            }
+            colors: { darkBg: "#05070d" }
           }
         }
       };
     </script>
     
     <style>
-      /* 强制平滑过渡 */
       body { transition: background-color 0.3s, color 0.3s; }
+      .glass { @apply bg-white/60 dark:bg-[#0b1020]/50 backdrop-blur-md ring-1 ring-black/5 dark:ring-white/10; }
     </style>
   </head>
-  <body class="min-h-screen bg-sky-100 text-slate-900 dark:bg-[#05070d] dark:text-slate-200">
+  <body class="min-h-screen bg-sky-100 text-slate-900 dark:bg-[#05070d] dark:text-slate-200 overflow-x-hidden">
     
     <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
       <div class="absolute inset-0 bg-gradient-to-br from-sky-100 via-blue-100 to-indigo-100 dark:from-[#05070d] dark:via-[#060a12] dark:to-[#05060a]"></div>
       <div class="absolute inset-0 bg-[radial-gradient(900px_circle_at_20%_10%,rgba(56,189,248,0.4),transparent_60%)] dark:bg-[radial-gradient(900px_circle_at_20%_10%,rgba(59,130,246,0.08),transparent_62%)]"></div>
-      <div class="absolute inset-0 bg-[radial-gradient(900px_circle_at_85%_80%,rgba(99,102,241,0.3),transparent_60%)] dark:bg-[radial-gradient(900px_circle_at_85%_80%,rgba(139,92,246,0.06),transparent_62%)]"></div>
     </div>
 
     <main class="relative mx-auto flex min-h-screen max-w-5xl flex-col items-center px-4 py-12">
-      <button
-        id="themeToggle"
-        type="button"
-        class="self-end mb-8 inline-flex items-center gap-2 rounded-full bg-white/70 dark:bg-[#0b1020]/70 px-4 py-2 text-sm font-semibold shadow-md ring-1 ring-black/10 dark:ring-white/10 backdrop-blur-md transition hover:scale-105 active:scale-95"
-      >
-        <span id="themeIcon">☀</span>
-        <span id="themeLabel">ライト</span>
-      </button>
+      
+      <div class="w-full flex justify-between items-center mb-8">
+        <select id="langSelect" class="glass rounded-full px-3 py-2 text-sm font-medium outline-none cursor-pointer hover:scale-105 transition-transform">
+          <option value="ja">🇯🇵 日本語</option>
+          <option value="en">🇺🇸 English</option>
+          <option value="zh">🇨🇳 中文</option>
+          <option value="ko">🇰🇷 한국어</option>
+        </select>
+
+        <button id="themeToggle" type="button" class="glass inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold shadow-md hover:scale-105 active:scale-95 transition-all">
+          <span id="themeIcon">☀</span>
+          <span id="themeLabel">ライト</span>
+        </button>
+      </div>
 
       <header class="w-full text-center mb-10">
         <h1 class="text-4xl font-extrabold tracking-tight sm:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-sky-400 dark:to-indigo-400">
           YNUstucom
         </h1>
+        <p id="subTitle" class="mt-4 text-slate-500 dark:text-slate-400 text-sm">大学生活をよりスマートに</p>
       </header>
 
       <div id="linkGrid" class="grid grid-cols-1 gap-4 w-full sm:grid-cols-2 lg:grid-cols-4">
         </div>
+
+      <button id="openModal" class="mt-10 group flex items-center gap-2 px-6 py-3 rounded-2xl border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-blue-500 dark:hover:border-blue-400 transition-all text-slate-500 hover:text-blue-500">
+        <span class="text-xl">+</span>
+        <span id="addBtnText">リンクを追加</span>
+      </button>
     </main>
 
+    <div id="modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+      <div class="glass w-full max-w-md rounded-3xl p-8 shadow-2xl scale-95 transition-transform">
+        <h2 id="modalTitle" class="text-xl font-bold mb-6">新規リンク追加</h2>
+        <div class="space-y-4">
+          <input id="inputTitle" type="text" placeholder="名前 (例: My Portfolio)" class="w-full bg-white/50 dark:bg-slate-900/50 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500">
+          <input id="inputUrl" type="text" placeholder="URL (https://...)" class="w-full bg-white/50 dark:bg-slate-900/50 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <div class="flex gap-3 mt-8">
+          <button id="closeModal" class="flex-1 py-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 transition-colors">キャンセル</button>
+          <button id="saveLink" class="flex-1 py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/30">保存</button>
+        </div>
+      </div>
+    </div>
+
     <script>
-      // --- 数据配置 ---
-      const links = [
-        { title: "LMS", desc: "授業・課題", url: "https://lms.ynu.ac.jp/", host: "lms.ynu.ac.jp" },
-        { title: "学務情報システム", desc: "履修・成績・手続き", url: "https://risyu.jmk.ynu.ac.jp/gakumu_portal/LogIn.aspx", host: "risyu.jmk.ynu.ac.jp" },
-        { title: "図書館", desc: "検索・貸出", url: "https://www.lib.ynu.ac.jp/", host: "lib.ynu.ac.jp" },
-        { title: "メール", desc: "Microsoft 365", url: "https://outlook.office.com/", host: "outlook.office.com" },
-        { title: "横国シラバス", desc: "シラバス検索", url: "https://risyu.jmk.ynu.ac.jp/gakumu_portal/public/Syllabus/", host: "risyu.jmk.ynu.ac.jp" },
-        { title: "みんなのキャンパス", desc: "履修関連", url: "https://campus.nikki.ne.jp/", host: "campus.nikki.ne.jp" },
-        { title: "生協", desc: "生協・ショップ", url: "https://www.univcoop.jp/ynu/index.html", host: "univcoop.jp/ynu" }
+      // --- 多语言字典 ---
+      const i18n = {
+        ja: { sub: "大学生活をよりスマートに", add: "リンクを追加", modal: "新規リンク追加", light: "ライト", dark: "ダーク", open: "開く", del: "削除" },
+        en: { sub: "Smart student portal", add: "Add Link", modal: "Add New Link", light: "Light", dark: "Dark", open: "OPEN", del: "Delete" },
+        zh: { sub: "让大学生活更智能", add: "添加链接", modal: "添加新链接", light: "浅色", dark: "深色", open: "打开", del: "删除" },
+        ko: { sub: "대학 생활을 스마트하게", add: "링크 추가", modal: "새 링크 추가", light: "라이트", dark: "다크", open: "열기", del: "삭제" }
+      };
+
+      // --- 数据管理 ---
+      const defaultLinks = [
+        { title: "LMS", desc: "授業・課題", url: "https://lms.ynu.ac.jp/", host: "lms.ynu.ac.jp", official: true },
+        { title: "学務情報システム", desc: "履修・成績・手続き", url: "https://risyu.jmk.ynu.ac.jp/gakumu_portal/LogIn.aspx", host: "risyu.jmk.ynu.ac.jp", official: true },
+        { title: "図書館", desc: "検索・貸出", url: "https://www.lib.ynu.ac.jp/", host: "lib.ynu.ac.jp", official: true },
+        { title: "メール", desc: "Microsoft 365", url: "https://outlook.office.com/", host: "outlook.office.com", official: true }
       ];
 
-      // --- 渲染逻辑 ---
-      const grid = document.getElementById('linkGrid');
-      grid.innerHTML = links.map(link => `
-        <a href="${link.url}" target="_blank" rel="noopener noreferrer" 
-           class="group flex flex-col justify-between rounded-2xl bg-white/60 dark:bg-[#0b1020]/50 p-5 shadow-sm ring-1 ring-black/5 dark:ring-white/10 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:bg-white/90 dark:hover:bg-[#0b1020]/80 hover:shadow-xl">
-          <div>
-            <div class="flex items-start justify-between gap-2">
-              <div class="text-lg font-bold">${link.title}</div>
-              <span class="shrink-0 rounded-full bg-blue-100 dark:bg-blue-500/20 px-2 py-0.5 text-[10px] font-bold text-blue-600 dark:text-blue-300">OPEN</span>
-            </div>
-            <div class="mt-1 text-sm text-slate-500 dark:text-slate-400">${link.desc}</div>
+      let customLinks = JSON.parse(localStorage.getItem('custom-links')) || [];
+      let currentLang = localStorage.getItem('ynu-lang') || 'ja';
+
+      // --- 核心渲染逻辑 ---
+      function render() {
+        const langData = i18n[currentLang];
+        
+        // 更新文案
+        document.getElementById('subTitle').textContent = langData.sub;
+        document.getElementById('addBtnText').textContent = langData.add;
+        document.getElementById('modalTitle').textContent = langData.modal;
+        document.getElementById('langSelect').value = currentLang;
+
+        // 渲染卡片
+        const allLinks = [...defaultLinks, ...customLinks];
+        const grid = document.getElementById('linkGrid');
+        grid.innerHTML = allLinks.map((link, index) => `
+          <div class="group relative flex flex-col justify-between rounded-2xl glass p-5 transition-all duration-300 hover:-translate-y-1 hover:bg-white/90 dark:hover:bg-[#0b1020]/80 hover:shadow-xl">
+            <a href="${link.url}" target="_blank" rel="noopener noreferrer" class="flex-1">
+              <div class="flex items-start justify-between gap-2">
+                <div class="text-lg font-bold truncate">${link.title}</div>
+                <span class="shrink-0 rounded-full bg-blue-100 dark:bg-blue-500/20 px-2 py-0.5 text-[10px] font-bold text-blue-600 dark:text-blue-300">${langData.open}</span>
+              </div>
+              <div class="mt-1 text-sm text-slate-500 dark:text-slate-400">${link.desc || link.url}</div>
+              <div class="mt-6 text-[10px] font-mono opacity-50 truncate">${link.host || ''}</div>
+            </a>
+            ${!link.official ? `
+              <button onclick="deleteLink(${index - defaultLinks.length})" class="absolute -top-2 -right-2 h-6 w-6 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity text-xs shadow-lg">✕</button>
+            ` : ''}
           </div>
-          <div class="mt-6 text-[10px] font-mono opacity-50">${link.host}</div>
-        </a>
-      `).join('');
+        `).join('');
+      }
 
-      // --- 深色模式逻辑 ---
-      const root = document.documentElement;
+      // --- 事件处理 ---
+      document.getElementById('langSelect').onchange = (e) => {
+        currentLang = e.target.value;
+        localStorage.setItem('ynu-lang', currentLang);
+        render();
+        updateThemeUI(document.documentElement.classList.contains('dark'));
+      };
+
+      // 自定义链接逻辑
+      const modal = document.getElementById('modal');
+      document.getElementById('openModal').onclick = () => modal.classList.remove('hidden');
+      document.getElementById('closeModal').onclick = () => modal.classList.add('hidden');
+      
+      document.getElementById('saveLink').onclick = () => {
+        const title = document.getElementById('inputTitle').value;
+        const url = document.getElementById('inputUrl').value;
+        if(title && url) {
+          customLinks.push({ title, url, desc: "Custom Link", host: new URL(url).hostname });
+          localStorage.setItem('custom-links', JSON.stringify(customLinks));
+          render();
+          modal.classList.add('hidden');
+          document.getElementById('inputTitle').value = '';
+          document.getElementById('inputUrl').value = '';
+        }
+      };
+
+      window.deleteLink = (idx) => {
+        customLinks.splice(idx, 1);
+        localStorage.setItem('custom-links', JSON.stringify(customLinks));
+        render();
+      };
+
+      // --- 深色模式 (复用并微调) ---
       const themeBtn = document.getElementById("themeToggle");
-      const themeIcon = document.getElementById("themeIcon");
-      const themeLabel = document.getElementById("themeLabel");
-
       function updateThemeUI(isDark) {
+        const label = i18n[currentLang];
         if (isDark) {
-          root.classList.add("dark");
-          themeIcon.textContent = "🌙";
-          themeLabel.textContent = "ダーク";
+          document.documentElement.classList.add("dark");
+          document.getElementById("themeIcon").textContent = "🌙";
+          document.getElementById("themeLabel").textContent = label.dark;
         } else {
-          root.classList.remove("dark");
-          themeIcon.textContent = "☀";
-          themeLabel.textContent = "ライト";
+          document.documentElement.classList.remove("dark");
+          document.getElementById("themeIcon").textContent = "☀";
+          document.getElementById("themeLabel").textContent = label.light;
         }
       }
 
-      // 初始化：优先本地存储，其次系统偏好
-      let isDark = localStorage.getItem("ynu-theme") === "dark" || 
-                  (!localStorage.getItem("ynu-theme") && window.matchMedia("(prefers-color-scheme: dark)").matches);
-      
+      let isDark = localStorage.getItem("ynu-theme") === "dark" || (!localStorage.getItem("ynu-theme") && window.matchMedia("(prefers-color-scheme: dark)").matches);
       updateThemeUI(isDark);
-
       themeBtn.addEventListener("click", () => {
-        isDark = !root.classList.contains("dark");
+        isDark = !document.documentElement.classList.contains("dark");
         localStorage.setItem("ynu-theme", isDark ? "dark" : "light");
         updateThemeUI(isDark);
       });
+
+      render(); // 初次渲染
     </script>
   </body>
 </html>
