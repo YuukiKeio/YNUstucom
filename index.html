@@ -4,246 +4,112 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>YNUstucom</title>
-    <meta
-      name="description"
-      content="YNUstucom 学生ポータル：LMS、学務情報システム、図書館、メール等へのショートカット。"
-    />
+    <meta name="description" content="YNUstucom 学生ポータル" />
 
-    <!-- Tailwind CSS (CDN) -->
-    <script>
-      tailwind.config = { darkMode: "class" };
-    </script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              darkBg: "#05070d",
+            }
+          }
+        }
+      };
+    </script>
+    
+    <style>
+      /* 强制平滑过渡 */
+      body { transition: background-color 0.3s, color 0.3s; }
+    </style>
   </head>
-  <body
-    class="min-h-dvh bg-gradient-to-br from-sky-100 via-blue-100 to-indigo-100 text-slate-900 transition-colors duration-300 dark:from-[#05070d] dark:via-[#060a12] dark:to-[#05060a] dark:text-slate-200"
-  >
-    <main class="relative mx-auto flex min-h-dvh max-w-5xl flex-col items-center justify-center px-4 py-12">
-      <div class="pointer-events-none absolute inset-0">
-        <div
-          class="absolute inset-0 bg-[radial-gradient(900px_circle_at_20%_10%,rgba(56,189,248,0.55),transparent_60%)] dark:bg-[radial-gradient(900px_circle_at_20%_10%,rgba(59,130,246,0.10),transparent_62%)]"
-        ></div>
-        <div
-          class="absolute inset-0 bg-[radial-gradient(900px_circle_at_85%_80%,rgba(99,102,241,0.40),transparent_60%)] dark:bg-[radial-gradient(900px_circle_at_85%_80%,rgba(139,92,246,0.08),transparent_62%)]"
-        ></div>
-        <div
-          class="absolute -top-24 left-1/2 h-80 w-[36rem] -translate-x-1/2 rounded-full bg-sky-300/60 blur-3xl dark:bg-blue-500/10"
-        ></div>
-        <div
-          class="absolute -bottom-32 right-[-10rem] h-80 w-[36rem] rounded-full bg-indigo-300/55 blur-3xl dark:bg-fuchsia-500/08"
-        ></div>
-      </div>
+  <body class="min-h-screen bg-sky-100 text-slate-900 dark:bg-[#05070d] dark:text-slate-200">
+    
+    <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+      <div class="absolute inset-0 bg-gradient-to-br from-sky-100 via-blue-100 to-indigo-100 dark:from-[#05070d] dark:via-[#060a12] dark:to-[#05060a]"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(900px_circle_at_20%_10%,rgba(56,189,248,0.4),transparent_60%)] dark:bg-[radial-gradient(900px_circle_at_20%_10%,rgba(59,130,246,0.08),transparent_62%)]"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(900px_circle_at_85%_80%,rgba(99,102,241,0.3),transparent_60%)] dark:bg-[radial-gradient(900px_circle_at_85%_80%,rgba(139,92,246,0.06),transparent_62%)]"></div>
+    </div>
 
+    <main class="relative mx-auto flex min-h-screen max-w-5xl flex-col items-center px-4 py-12">
       <button
         id="themeToggle"
         type="button"
-        class="absolute right-4 top-4 inline-flex items-center gap-2 rounded-full bg-white/70 px-3 py-2 text-sm font-semibold text-slate-900 shadow-md ring-1 ring-black/10 backdrop-blur transition hover:bg-white hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:bg-[#0b1020]/70 dark:text-slate-200 dark:ring-white/10 dark:shadow-black/60 dark:hover:bg-[#0b1020]/85"
-        aria-label="ライト/ダーク切替"
+        class="self-end mb-8 inline-flex items-center gap-2 rounded-full bg-white/70 dark:bg-[#0b1020]/70 px-4 py-2 text-sm font-semibold shadow-md ring-1 ring-black/10 dark:ring-white/10 backdrop-blur-md transition hover:scale-105 active:scale-95"
       >
-        <span id="themeIcon" aria-hidden="true">☀</span>
+        <span id="themeIcon">☀</span>
         <span id="themeLabel">ライト</span>
       </button>
 
-      <header class="w-full text-center">
-        <h1 class="text-balance text-3xl font-extrabold tracking-tight sm:text-5xl">
+      <header class="w-full text-center mb-10">
+        <h1 class="text-4xl font-extrabold tracking-tight sm:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-sky-400 dark:to-indigo-400">
           YNUstucom
         </h1>
       </header>
 
-      <section class="mt-10 w-full">
-        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <a
-            href="https://lms.ynu.ac.jp/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="group rounded-2xl bg-white/75 p-5 shadow-md ring-1 ring-black/10 backdrop-blur transition will-change-transform hover:scale-105 hover:bg-white hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:bg-[#0b1020]/55 dark:ring-white/10 dark:shadow-black/70 dark:hover:bg-[#0b1020]/65 dark:hover:shadow-2xl"
-          >
-            <div class="flex items-start justify-between gap-3">
-              <div class="min-w-0">
-                <div class="text-lg font-semibold">LMS</div>
-                <div class="mt-1 text-sm text-slate-600 dark:text-slate-400">授業・課題</div>
-              </div>
-              <span
-                class="shrink-0 rounded-full bg-sky-100 px-2 py-1 text-xs font-medium text-sky-700 group-hover:bg-sky-200 dark:bg-sky-500/10 dark:text-sky-200/90 dark:group-hover:bg-sky-500/15"
-              >
-                新しいタブ
-              </span>
-            </div>
-            <div class="mt-4 text-xs text-slate-500 dark:text-slate-400">
-              lms.ynu.ac.jp
-            </div>
-          </a>
-
-          <a
-            href="https://risyu.jmk.ynu.ac.jp/gakumu_portal/LogIn.aspx"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="group rounded-2xl bg-white/75 p-5 shadow-md ring-1 ring-black/10 backdrop-blur transition will-change-transform hover:scale-105 hover:bg-white hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:bg-[#0b1020]/55 dark:ring-white/10 dark:shadow-black/70 dark:hover:bg-[#0b1020]/65 dark:hover:shadow-2xl"
-          >
-            <div class="flex items-start justify-between gap-3">
-              <div class="min-w-0">
-                <div class="text-lg font-semibold">学務情報システム</div>
-                <div class="mt-1 text-sm text-slate-600 dark:text-slate-400">履修・成績・手続き</div>
-              </div>
-              <span
-                class="shrink-0 rounded-full bg-sky-100 px-2 py-1 text-xs font-medium text-sky-700 group-hover:bg-sky-200 dark:bg-sky-500/10 dark:text-sky-200/90 dark:group-hover:bg-sky-500/15"
-              >
-                新しいタブ
-              </span>
-            </div>
-            <div class="mt-4 text-xs text-slate-500 dark:text-slate-400">
-              risyu.jmk.ynu.ac.jp
-            </div>
-          </a>
-
-          <a
-            href="https://www.lib.ynu.ac.jp/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="group rounded-2xl bg-white/75 p-5 shadow-md ring-1 ring-black/10 backdrop-blur transition will-change-transform hover:scale-105 hover:bg-white hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:bg-[#0b1020]/55 dark:ring-white/10 dark:shadow-black/70 dark:hover:bg-[#0b1020]/65 dark:hover:shadow-2xl"
-          >
-            <div class="flex items-start justify-between gap-3">
-              <div class="min-w-0">
-                <div class="text-lg font-semibold">図書館</div>
-                <div class="mt-1 text-sm text-slate-600 dark:text-slate-400">検索・貸出</div>
-              </div>
-              <span
-                class="shrink-0 rounded-full bg-sky-100 px-2 py-1 text-xs font-medium text-sky-700 group-hover:bg-sky-200 dark:bg-sky-500/10 dark:text-sky-200/90 dark:group-hover:bg-sky-500/15"
-              >
-                新しいタブ
-              </span>
-            </div>
-            <div class="mt-4 text-xs text-slate-500 dark:text-slate-400">
-              lib.ynu.ac.jp
-            </div>
-          </a>
-
-          <a
-            href="https://outlook.office.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="group rounded-2xl bg-white/75 p-5 shadow-md ring-1 ring-black/10 backdrop-blur transition will-change-transform hover:scale-105 hover:bg-white hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:bg-[#0b1020]/55 dark:ring-white/10 dark:shadow-black/70 dark:hover:bg-[#0b1020]/65 dark:hover:shadow-2xl"
-          >
-            <div class="flex items-start justify-between gap-3">
-              <div class="min-w-0">
-                <div class="text-lg font-semibold">メール</div>
-                <div class="mt-1 text-sm text-slate-600 dark:text-slate-400">Microsoft 365</div>
-              </div>
-              <span
-                class="shrink-0 rounded-full bg-sky-100 px-2 py-1 text-xs font-medium text-sky-700 group-hover:bg-sky-200 dark:bg-sky-500/10 dark:text-sky-200/90 dark:group-hover:bg-sky-500/15"
-              >
-                新しいタブ
-              </span>
-            </div>
-            <div class="mt-4 text-xs text-slate-500 dark:text-slate-400">
-              outlook.office.com
-            </div>
-          </a>
-
-          <a
-            href="https://risyu.jmk.ynu.ac.jp/gakumu_portal/public/Syllabus/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="group rounded-2xl bg-white/75 p-5 shadow-md ring-1 ring-black/10 backdrop-blur transition will-change-transform hover:scale-105 hover:bg-white hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:bg-[#0b1020]/55 dark:ring-white/10 dark:shadow-black/70 dark:hover:bg-[#0b1020]/65 dark:hover:shadow-2xl"
-          >
-            <div class="flex items-start justify-between gap-3">
-              <div class="min-w-0">
-                <div class="text-lg font-semibold">横国シラバス</div>
-                <div class="mt-1 text-sm text-slate-600 dark:text-slate-400">シラバス検索</div>
-              </div>
-              <span
-                class="shrink-0 rounded-full bg-sky-100 px-2 py-1 text-xs font-medium text-sky-700 group-hover:bg-sky-200 dark:bg-sky-500/10 dark:text-sky-200/90 dark:group-hover:bg-sky-500/15"
-              >
-                新しいタブ
-              </span>
-            </div>
-            <div class="mt-4 text-xs text-slate-500 dark:text-slate-400">
-              risyu.jmk.ynu.ac.jp
-            </div>
-          </a>
-
-          <a
-            href="https://campus.nikki.ne.jp/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="group rounded-2xl bg-white/75 p-5 shadow-md ring-1 ring-black/10 backdrop-blur transition will-change-transform hover:scale-105 hover:bg-white hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:bg-[#0b1020]/55 dark:ring-white/10 dark:shadow-black/70 dark:hover:bg-[#0b1020]/65 dark:hover:shadow-2xl"
-          >
-            <div class="flex items-start justify-between gap-3">
-              <div class="min-w-0">
-                <div class="text-lg font-semibold">みんなのキャンパス</div>
-                <div class="mt-1 text-sm text-slate-600 dark:text-slate-400">キャンパス関連</div>
-              </div>
-              <span
-                class="shrink-0 rounded-full bg-sky-100 px-2 py-1 text-xs font-medium text-sky-700 group-hover:bg-sky-200 dark:bg-sky-500/10 dark:text-sky-200/90 dark:group-hover:bg-sky-500/15"
-              >
-                新しいタブ
-              </span>
-            </div>
-            <div class="mt-4 text-xs text-slate-500 dark:text-slate-400">
-              campus.nikki.ne.jp
-            </div>
-          </a>
-
-          <a
-            href="https://www.univcoop.jp/ynu/index.html"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="group rounded-2xl bg-white/75 p-5 shadow-md ring-1 ring-black/10 backdrop-blur transition will-change-transform hover:scale-105 hover:bg-white hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:bg-[#0b1020]/55 dark:ring-white/10 dark:shadow-black/70 dark:hover:bg-[#0b1020]/65 dark:hover:shadow-2xl"
-          >
-            <div class="flex items-start justify-between gap-3">
-              <div class="min-w-0">
-                <div class="text-lg font-semibold">生協</div>
-                <div class="mt-1 text-sm text-slate-600 dark:text-slate-400">生協・ショップ</div>
-              </div>
-              <span
-                class="shrink-0 rounded-full bg-sky-100 px-2 py-1 text-xs font-medium text-sky-700 group-hover:bg-sky-200 dark:bg-sky-500/10 dark:text-sky-200/90 dark:group-hover:bg-sky-500/15"
-              >
-                新しいタブ
-              </span>
-            </div>
-            <div class="mt-4 text-xs text-slate-500 dark:text-slate-400">
-              univcoop.jp/ynu
-            </div>
-          </a>
+      <div id="linkGrid" class="grid grid-cols-1 gap-4 w-full sm:grid-cols-2 lg:grid-cols-4">
         </div>
-      </section>
-
     </main>
 
     <script>
+      // --- 数据配置 ---
+      const links = [
+        { title: "LMS", desc: "授業・課題", url: "https://lms.ynu.ac.jp/", host: "lms.ynu.ac.jp" },
+        { title: "学務情報システム", desc: "履修・成績・手続き", url: "https://risyu.jmk.ynu.ac.jp/gakumu_portal/LogIn.aspx", host: "risyu.jmk.ynu.ac.jp" },
+        { title: "図書館", desc: "検索・貸出", url: "https://www.lib.ynu.ac.jp/", host: "lib.ynu.ac.jp" },
+        { title: "メール", desc: "Microsoft 365", url: "https://outlook.office.com/", host: "outlook.office.com" },
+        { title: "横国シラバス", desc: "シラバス検索", url: "https://risyu.jmk.ynu.ac.jp/gakumu_portal/public/Syllabus/", host: "risyu.jmk.ynu.ac.jp" },
+        { title: "みんなのキャンパス", desc: "履修関連", url: "https://campus.nikki.ne.jp/", host: "campus.nikki.ne.jp" },
+        { title: "生協", desc: "生協・ショップ", url: "https://www.univcoop.jp/ynu/index.html", host: "univcoop.jp/ynu" }
+      ];
+
+      // --- 渲染逻辑 ---
+      const grid = document.getElementById('linkGrid');
+      grid.innerHTML = links.map(link => `
+        <a href="${link.url}" target="_blank" rel="noopener noreferrer" 
+           class="group flex flex-col justify-between rounded-2xl bg-white/60 dark:bg-[#0b1020]/50 p-5 shadow-sm ring-1 ring-black/5 dark:ring-white/10 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:bg-white/90 dark:hover:bg-[#0b1020]/80 hover:shadow-xl">
+          <div>
+            <div class="flex items-start justify-between gap-2">
+              <div class="text-lg font-bold">${link.title}</div>
+              <span class="shrink-0 rounded-full bg-blue-100 dark:bg-blue-500/20 px-2 py-0.5 text-[10px] font-bold text-blue-600 dark:text-blue-300">OPEN</span>
+            </div>
+            <div class="mt-1 text-sm text-slate-500 dark:text-slate-400">${link.desc}</div>
+          </div>
+          <div class="mt-6 text-[10px] font-mono opacity-50">${link.host}</div>
+        </a>
+      `).join('');
+
+      // --- 深色模式逻辑 ---
       const root = document.documentElement;
-      const btn = document.getElementById("themeToggle");
-      const icon = document.getElementById("themeIcon");
-      const label = document.getElementById("themeLabel");
+      const themeBtn = document.getElementById("themeToggle");
+      const themeIcon = document.getElementById("themeIcon");
+      const themeLabel = document.getElementById("themeLabel");
 
-      function getPreferredTheme() {
-        const saved = localStorage.getItem("ynu-theme");
-        if (saved === "dark" || saved === "light") return saved;
-        return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
-          ? "dark"
-          : "light";
-      }
-
-      function applyTheme(theme) {
-        if (theme === "dark") {
+      function updateThemeUI(isDark) {
+        if (isDark) {
           root.classList.add("dark");
-          icon.textContent = "🌙";
-          label.textContent = "ダーク";
+          themeIcon.textContent = "🌙";
+          themeLabel.textContent = "ダーク";
         } else {
           root.classList.remove("dark");
-          icon.textContent = "☀";
-          label.textContent = "ライト";
+          themeIcon.textContent = "☀";
+          themeLabel.textContent = "ライト";
         }
       }
 
-      applyTheme(getPreferredTheme());
+      // 初始化：优先本地存储，其次系统偏好
+      let isDark = localStorage.getItem("ynu-theme") === "dark" || 
+                  (!localStorage.getItem("ynu-theme") && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      
+      updateThemeUI(isDark);
 
-      btn.addEventListener("click", () => {
-        const next = root.classList.contains("dark") ? "light" : "dark";
-        localStorage.setItem("ynu-theme", next);
-        applyTheme(next);
+      themeBtn.addEventListener("click", () => {
+        isDark = !root.classList.contains("dark");
+        localStorage.setItem("ynu-theme", isDark ? "dark" : "light");
+        updateThemeUI(isDark);
       });
     </script>
   </body>
 </html>
-
